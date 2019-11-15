@@ -1,0 +1,274 @@
+0:000> g
+(2590.440c): Unknown exception - code c000041d (!!! second chance !!!)
+eax=c0c0c0c0 ebx=1892afe0 ecx=204a88f0 edx=00000c5d esi=204a88f0 edi=00000000
+eip=635a1d68 esp=0019f334 ebp=0019f338 iopl=0         nv up ei ng nz na pe nc
+cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00010286
+atpdmod!conDllGetClassObject+0x24ee47:
+635a1d68 8b4004          mov     eax,dword ptr [eax+4] ds:002b:c0c0c0c4=????????
+0:000> kv
+ # ChildEBP RetAddr  Args to Child 
+ 
+For Stack.Frames[0]
+
+00 0019f338 63432125 c0c0c0c0 00000001 0019f354 atpdmod!conDllGetClassObject+0x24ee47
+635a1d60 55           push    ebp
+635a1d61 8bec         mov     ebp, esp
+635a1d63 8b4508       mov     eax, dword ptr [ebp+8]
+635a1d66 6a00         push    0
+635a1d68 8b4004       mov     eax, dword ptr [eax+4] ds:002b:c0c0c0c4=????????
+esi
+
+01 0019f358 63433ba8 17dfce74 0019f3b4 1892afe0 atpdmod!conDllGetClassObject+0xdf204
+6343211a 50             push    eax
+6343211b 6a01           push    1
+6343211d ff7614         push    dword ptr [esi+14h]
+63432120 e83bfc1600     call    atpdmod!conDllGetClassObject+0x24ee3f (635a1d60)
+
+02 0019f378 6341f86f 00000002 2412d000 00000c5d atpdmod!conDllGetClassObject+0xe0c87
+63433b8b 55               push    ebp
+63433b8c 8bec             mov     ebp, esp
+63433b8e 83ec0c           sub     esp, 0Ch
+63433b91 53               push    ebx
+63433b92 33c0             xor     eax, eax
+63433b94 56               push    esi
+63433b95 57               push    edi
+63433b96 8bf1             mov     esi, ecx
+63433b98 8945f4           mov     dword ptr [ebp-0Ch], eax
+63433b9b 8945fc           mov     dword ptr [ebp-4], eax
+63433b9e 8bf8             mov     edi, eax
+63433ba0 8945f8           mov     dword ptr [ebp-8], eax
+63433ba3 e84de5ffff       call    atpdmod!conDllGetClassObject+0xdf1d4 (634320f5)
+
+
+0:000> dd ecx
+204a88f0  63628c58 ffffffff 2c3c0ff8 22fc5dc0
+204a8900  204b4f50 c0c0c0c0 6362937c ffffffff
+204a8910  00000000 00000000 00000000 00000000
+204a8920  00000000 0000000a c0c00002 11ac4f98
+204a8930  6362937c ffffffff 11eacf84 11eacfb4
+204a8940  00000005 11eacfc0 11eacf80 0000000a
+204a8950  20beefe8 1df22fe8 11442fe8 00000000
+204a8960  00000000 00000000 00000000 00000000
+
+0:000> da poi(poi(poi(ecx)-4)+c)+8
+636b1500  ".?AVCFFSpace@@"
+
+0:000> da poi(poi(0x6362937c-4)+c)+8
+636b168c  ".?AVCPDPtrList@@"
+ecx
+c0c0c0c0
+03 0019f58c 633c3f17 09f52664 00000006 17dfca50 atpdmod!conDllGetClassObject+0xcc94e
+6341f849 56             push    esi
+6341f84a 83ec0c         sub     esp, 0Ch
+6341f84d 8db51cfeffff   lea     esi, [ebp-1E4h]
+6341f853 8bfc           mov     edi, esp
+6341f855 6a02           push    2
+6341f857 a5             movs    dword ptr es:[edi], dword ptr [esi]
+6341f858 a5             movs    dword ptr es:[edi], dword ptr [esi]
+6341f859 a5             movs    dword ptr es:[edi], dword ptr [esi]
+6341f85a 8bbd34feffff   mov     edi, dword ptr [ebp-1CCh]
+6341f860 8b4f4c         mov     ecx, dword ptr [edi+4Ch]
+6341f863 e8c085ffff     call    atpdmod!conDllGetClassObject+0xc4f07 (63417e28) // 63417e28= atpdmod+0x000d7e28
+6341f868 8bc8           mov     ecx, eax
+6341f86a e81c430100     call    atpdmod!conDllGetClassObject+0xe0c6a (63433b8b)
+--------------
+int __thiscall sub_100D7E28(_DWORD *this)
+{
+  _DWORD *v1; // esi
+  int result; // eax
+  _DWORD *v3; // eax
+  _DWORD *v4; // ecx
+
+  v1 = this;
+  result = this[0x123];
+  /*
+	63417e34 8bf1            mov     esi,ecx
+	63417e36 8b868c040000    mov     eax,dword ptr [esi+48Ch]
+	63417e3c 85c0            test    eax,eax
+  */
+  if ( !result )
+  {
+    v3 = operator new(0x710u);
+	/*
+		63417e40 6810070000   push    710h
+		63417e45 e8ab711300   call    atpdmod!conDllGetClassObject+0x1fc0d4 (6354eff5)
+	*/
+
+    v4 = 0;
+    if ( v3 )
+      v4 = wbxInitCFFSpace(v3, 0);
+    v1[0x123] = v4;
+	
+    if ( v4 )
+      v4[0x1C3] = v1 + 0xC;
+  
+    sub_10082A01(v1);
+    result = v1[0x123];
+  }
+  return result;
+}
+
+//?? eax +0x14 = 0xc0c0c0c0
+_____________________________________________________________________
+
+0:000> sxe ld atpdmod
+
+0:001> bp D7E45+atpdmod ".echo \"v3 = operator new(0x710u);\"; "
+0:001> bp D7E3C+atpdmod ".echo \"result = this[0x123\";"
+
+result = this[0x123
+eax=00000000 ebx=00000001 ecx=21574a50 edx=7fffffff esi=21574a50 edi=1dde2fc8
+eip=63417e3c esp=0019c214 ebp=0019c234 iopl=0         nv up ei ng nz na po nc
+cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00000282
+atpdmod!conDllGetClassObject+0xc4f1b:
+63417e3c 85c0            test    eax,eax
+
+v3 = operator new(0x710u);
+eax=00000000 ebx=00000001 ecx=21574a50 edx=7fffffff esi=21574a50 edi=1dde2fc8
+eip=63417e45 esp=0019c210 ebp=0019c234 iopl=0         nv up ei pl zr na pe nc
+cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00000246
+atpdmod!conDllGetClassObject+0xc4f24:
+63417e45 e8ab711300      call    atpdmod!conDllGetClassObject+0x1fc0d4 (6354eff5)
+
+0:000> p
+eax=2383c8f0 ebx=00000001 ecx=00000710 edx=01000002 esi=21574a50 edi=1dde2fc8
+eip=63417e4a esp=0019c210 ebp=0019c234 iopl=0         nv up ei pl nz na pe nc
+cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00000206
+atpdmod!conDllGetClassObject+0xc4f29:
+63417e4a 59              pop     ecx
+
+
+aftor "v4 = wbxInitCFFSpace(v3, 0);" i dump cffspace instance's memory
+0:000> .writemem d:\dump\cffspace-inited.bin eax L710
+Writing 710 bytes.
+
+
+0:000> ba w4 eax+14 ".echo \"\";ub eip L2;r;gc;"
+breakpoint 0 redefined
+edi
+
+634340c4 8b570c           mov     edx, dword ptr [edi+0Ch]
+634340c7 6bc044           imul    eax, eax, 44h
+634340ca 89459c           mov     dword ptr [ebp-64h], eax
+634340cd 66394c101e       cmp     word ptr [eax+edx+1Eh], cx
+634340d2 0f84dd010000     je      atpdmod!conDllGetClassObject+0xe1394 (634342b5)
+634340d8 0fb74c1048       movzx   ecx, word ptr [eax+edx+48h]
+634340dd 8b44104c         mov     eax, dword ptr [eax+edx+4Ch]
+634340e1 8b4488fc         mov     eax, dword ptr [eax+ecx*4-4]
+634340e5 85c0             test    eax, eax
+634340e7 0f8487010000     je      atpdmod!conDllGetClassObject+0xe1353 (63434274)
+634340ed 894714           mov     dword ptr [edi+14h], eax // atpdmod+000f40ed
+
+
+
+//objCFFSpace's address is 2383c8f0
+0:000> dd 2383c8f0 
+2383c8f0  63628c58 ffffffff 14610ff8 238eedc0
+2383c900  1e694f50 c0c0c0c0 6362937c ffffffff
+2383c910  00000000 00000000 00000000 00000000
+2383c920  00000000 0000000a c0c00003 29ad8f98
+2383c930  6362937c ffffffff 111d2f84 111d2fb4
+2383c940  00000005 111d2fc0 111d2f80 0000000a
+2383c950  1f28efe8 27812fe8 1f5defe8 29fa2fe8
+2383c960  00000000 00000000 00000000 00000000
+
+0:000> .writemem d:\dump\cffspace_0c_crash.bin 238eedc0 L0x710 
+Writing 710 bytes.
+0:000> dd 238eedc0+110
+238eeed0  ffffffff 00000000 1e3d8ff8 27864ff8
+238eeee0  22b24ff8 00000000 00000028 ffffc0c0
+238eeef0  c0c0c0c0 c0c0c0c0 c0c0c0c0 c0c0c0c0
+238eef00  00000000 00000000 c0c0c0c0 c0c0c0c0
+238eef10  c0c0c0c0 c0c0c0c0 c0c0c0c0 c0c0c0c0
+238eef20  c0c0c0c0 c0c0c0c0 c0c0c0c0 c0c0c0c0
+238eef30  ffffc0c0 c0c0c0c0 c0c0c0c0 c0c0c0c0
+238eef40  c0c0c0c0 00000000 00000000 c0c0c0c0
+
+
+
+//element_0
+0:000> dd 1f290ff8-4
+1f290ff4  c0c0c0c0 2442e9d0 d0d0f05a ????????
+//element_1
+0:000> dd 08022ff8-4
+08022ff4  c0c0c0c0 1f6e89d0 d0d0f05a ????????
+//element_2
+0:000> dd 27814ff8-4
+27814ff4  c0c0c0c0 1f5e09d0 d0d0f05a ????????
+//element_3
+0:000> dd 1e3d8ff8-4
+1e3d8ff4  c0c0c0c0 c0c0c0c0 d0d0f05a ????????
+
+
+
+
+0:000> !exploitable
+
+!exploitable 1.6.0.0
+Exploitability Classification: UNKNOWN
+Recommended Bug Title: Data from Faulting Address is used as one or more arguments in a subsequent Function Call 
+starting at atpdmod!conDllGetClassObject+0x000000000024ee47 (Hash=0x28d0f3c0.0xcb9f64e2)
+
+The data from the faulting address is later used as one or more of the arguments to a function call.
+Now, the reason I found it is that the programe does not set default value when the pointer (Element.offset_2eh ¨C 0x04) alloced.And the pointer
+The ultimate cause of the trigger vulnerability has not been found. This will take some time to analyze.
+
+Windbg result shows UNKNOWN, but I think this result is not accurate. Because there are subsequent operations to write to this address.
+
+
+
+bp D7E45+atpdmod ".echo \"v3 = operator new(0x710u);\"; "
+bp D7E3C+atpdmod ".echo \"result = this[0x123\";r; "
+
+
+bp D7E3C+atpdmod ".if(eax!=0){.echo \"result = this[0x123];\"; dd eax L8;.if(poi(eax+14)!=0xc0c0c0c0){gc;}}.else{gc;} "
+
+06622904 w 4 0001 (0001)  0:****  ".echo ...;ub eip L2;r;r @$t0;gc;"
+
+----------------------------------------------------------------------
+monitor list
+bp 0264074+atpdmod
+atpdmod!conDllGetClassObject+0x251153 
+
+Breakpoint 2 hit
+eax=18d72ff8 ebx=000000cc ecx=18d72fe8 edx=0000000e esi=00000000 edi=110d4dc0
+eip=601b455a esp=00a5bbe0 ebp=00a5bc34 iopl=0         nv up ei pl nz na pe nc
+cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00000206
+atpdmod!conDllGetClassObject+0x251639:
+601b455a 59              pop     ecx
+0:000> ?601b455a-atpdmod
+Evaluate expression: 2508122 = 0026455a
+
+
+bp 025D89B+atpdmod
+0:000> ? 601b4551-atpdmod
+Evaluate expression: 2508113 = 00264551
+bp 00264551+atpdmod
+
+
+wbxMemoryBlock
+{
+DWORD dwOff_0;
+DWORD dwOff_4_Size;
+DWORD dwOff_8_Index;
+DWORD dwOff_C;
+DWORD dwOff_10_Data;
+WORD  wOff_14_DataEndFlag;
+}
+0:000> dd ecx
+2cfc0fe8  aa53c5aa 00000004 00000014 c0c0c0c0
+2cfc0ff8  c0c0c0c0 d0d0f05a ???????? ????????
+
+ÄÚ´æ¿éÉêÇë¼ÇÂ¼£º
+     2 e Disable Clear  601ad8f1     0001 (0001)  0:**** atpdmod!conDllGetClassObject+0x24a9d0 ".echo .;dd ecx L8;gc;"
+------------------
+  else if ( dword_103769B8 != 1 && !sub_1003156E(0) )
+  {
+    sub_1006F801(L"In SetSaveToPath, SetUcfAssosiateProgram Failed. Still go on to save the files.");
+  }
+
+
+
+
+
+
