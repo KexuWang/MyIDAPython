@@ -33,6 +33,7 @@ def TraveseCallDepth(targAddr, nDeep=0x20):
 		k+=1
 	print ""
 
+
 ################################################################################
 #Find or create a struct sid  
 def FindOrCreateStructSid(structName):
@@ -84,6 +85,54 @@ def CreateStructCFFSpace():
     print AddStrucMember(sid,"chOff_668",	-1, idc.FF_BYTE,	-1,1*0x70)
     print AddStrucMember(sid,"chOff_6d8",	-1, idc.FF_BYTE,	-1,1*0x24)
     return sid
+	
+	
+# wbxMemoryBlock
+# {
+# DWORD dwOff_0;
+# DWORD dwOff_4_Size;
+# DWORD dwOff_8_Index;
+# DWORD dwOff_C;
+# DWORD dwOff_10_Data;
+# WORD  wOff_14_DataEndFlag;
+# }
+def CreateStructWbxMemBlock():
+    sid = FindOrCreateStructSid("wbxMemBlock")
+    print AddStrucMember(sid,"dwOff_0",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_4_Size",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_8_Index",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_C",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_10_Data",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"wOff_14_DataEndFlag",	-1, idc.FF_DWORD,-1,4)
+    return sid
+
+
+# struct wbxListHeader_Off_04{
+# word wOff_0_Type;
+# word wOff_2;
+# DWORD dwOff_4;
+# DWORD dwOff_8;
+# }
+def CreateStructwbxListHeader_Off_04():
+    sid = FindOrCreateStructSid("wbxListHeader_Off_04")
+    print AddStrucMember(sid,"wOff_0_Type",	-1, idc.FF_WORD,-1,2)
+    print AddStrucMember(sid,"wOff_2",	-1, idc.FF_WORD,-1,2)
+    print AddStrucMember(sid,"dwOff_4",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_8",	-1, idc.FF_DWORD,-1,4)
+    return sid
+
+# pListHeader.dwOff_14 is a array. it element struct is 
+# struct wbxListHeader_Off_14{
+# DWORD dwOff_0_number;
+# DWORD dwOff_4; // size is 8 
+# }
+def CreateStructwbxListHeader_Off_14():
+    sid = FindOrCreateStructSid("wbxListHeader_Off_14")
+    print AddStrucMember(sid,"dwOff_0_number",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_4",	-1, idc.FF_DWORD,-1,4)
+    return sid
+
+
 ################################################################################	
 	
 def test1():
