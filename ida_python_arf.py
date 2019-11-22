@@ -133,6 +133,82 @@ def CreateStructwbxListHeader_Off_14():
     return sid
 
 
+# CPSESendCachePDU
+def CreateStructwbxCPSESendCachePDU():
+    sid = FindOrCreateStructSid("wbxCPSESendCachePDU")
+    print AddStrucMember(sid,"dwOff_0",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"wOff_4",	-1, idc.FF_WORD,-1,2)
+    print AddStrucMember(sid,"wOff_6",	-1, idc.FF_WORD,-1,2)
+    print AddStrucMember(sid,"dwOff_8",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_c",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_10",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_14",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_18",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_1c",	-1, idc.FF_DWORD,-1,4)
+    return sid
+
+
+#CPDDataBlock
+def CreateStructwbxCPDDataBlock():
+    sid = FindOrCreateStructSid("wbxCPDDataBlock")
+    print AddStrucMember(sid,"dwOff_0_vft",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_4",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"byOff_8",	-1, idc.FF_BYTE,-1,4)
+    print AddStrucMember(sid,"dwOff_c",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_10",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_14",	-1, idc.FF_DWORD,-1,4)
+    return sid
+	
+#WBXDataStream
+def CreateStructwbxDataStream():
+    sid = FindOrCreateStructSid("wbxDataStream")
+    print AddStrucMember(sid,"dwOff_0_vft",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_4",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_8",	-1, idc.FF_BYTE,-1,4)
+    print AddStrucMember(sid,"dwOff_c",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_10",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_14",	-1, idc.FF_DWORD,-1,4)
+    return sid
+
+#wbxMemoryInputStream
+def CreateStructwbxMemoryInputStream():
+    sid = FindOrCreateStructSid("wbxMemoryInputStream")
+    print AddStrucMember(sid,"dwOff_0_vft",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_4",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_8",	-1, idc.FF_BYTE,-1,4)
+    print AddStrucMember(sid,"dwOff_c",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_10",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_14",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_18",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_1c",	-1, idc.FF_DWORD,-1,4)
+    return sid
+
+#wbxInputStream
+def CreateStructwbxInputStream():
+    sid = FindOrCreateStructSid("wbxInputStream")
+    print AddStrucMember(sid,"dwOff_0_vft",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_4",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_8",	-1, idc.FF_BYTE,-1,4)
+    print AddStrucMember(sid,"dwOff_c",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_10",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_14",	-1, idc.FF_DWORD,-1,4)
+    return sid
+
+
+#wbxStreamBuffer
+def CreateStruct_wbxStreamBuffer():
+    sid = FindOrCreateStructSid("wbxStreamBuffer")
+    print AddStrucMember(sid,"dwOff_0_vft",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_4_UsedBeginePointer",		-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_8_BufferEndPointer",		-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_c_UsedEndPointer",		-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_10_BufferSize",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_14",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_18",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_1C",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_20",	-1, idc.FF_DWORD,-1,4)
+    print AddStrucMember(sid,"dwOff_24",	-1, idc.FF_DWORD,-1,4)
+    return sid
 ################################################################################	
 	
 def test1():
