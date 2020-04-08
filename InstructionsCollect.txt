@@ -1,0 +1,2 @@
+33 C0 xor     eax, eax
+40    inc     eax
